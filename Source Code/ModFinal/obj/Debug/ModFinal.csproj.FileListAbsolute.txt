@@ -1,0 +1,7 @@
+C:\Users\cgarrido\source\repos\ModFinal\ModFinal\bin\Debug\ModFinal.exe.config
+C:\Users\cgarrido\source\repos\ModFinal\ModFinal\bin\Debug\ModFinal.exe
+C:\Users\cgarrido\source\repos\ModFinal\ModFinal\bin\Debug\ModFinal.pdb
+C:\Users\cgarrido\source\repos\ModFinal\ModFinal\obj\Debug\ModFinal.csproj.AssemblyReference.cache
+C:\Users\cgarrido\source\repos\ModFinal\ModFinal\obj\Debug\ModFinal.csproj.CoreCompileInputs.cache
+C:\Users\cgarrido\source\repos\ModFinal\ModFinal\obj\Debug\ModFinal.exe
+C:\Users\cgarrido\source\repos\ModFinal\ModFinal\obj\Debug\ModFinal.pdb
