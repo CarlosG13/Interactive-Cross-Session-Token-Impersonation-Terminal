@@ -1,6 +1,9 @@
 # Interactive Cross-Session Token Impersonation Terminal
 
-A proof of concept demonstrating a simpler and more evasive method to initiate an interactive terminal with the *Token* of a service account in another session, without being affected by the conditions of GUI interaction across **separate desktops**, or requiring elevated privileges such as **SeTCBPrivilege** or **Desktop APIs** calls to modify desktop *ACL*, which are considerably noisy and detectable.
+A proof of concept demonstrating a simpler and more evasive method to initiate an interactive terminal with the *Token* of a service account in another session, without being affected by the conditions of *GUI* interaction across **separate desktops**, or requiring *elevated privileges* such as **SeTCBPrivilege** or **Desktop APIs** calls to modify desktop *ACL*, which are considerably noisy and detectable.
+
+This new approach in the **Access Token Manipulation** technique eliminates the need to escalate to **NT Authority\System** or modify our **desktop's ACL**, thereby reducing our chances of detection or raising suspicions.
+This artifact underwent testing against one of the leading *EDR* solutions in the industry, successfully evading detection.
 
 # Motivation
 
@@ -14,7 +17,7 @@ For instance, in the following scenario/test lab, we find ourselves in a domain 
 
 ![image](https://github.com/CarlosG13/Interactive-Cross-Session-Token-Impersonation-Terminal/assets/69405457/d185a37f-3248-45f1-8def-b6f7d9934952)
 
-The issue lies in targeting **LSASS for credential theft**, which holds immense value for adversaries, yet this process is closely monitored and protected. We've witnessed the inception of **Protected Process Light (PPL)** to prevent credential theft from user mode. To circumvent this, a driver installation was introduced, albeit effective, it operates noisily. Additionally, within **Windows Defender Exploit Guard (WDEG)**, there exists **Attack Surface Reduction (ASR)**, which includes a rule that 'prevents' **LSASS** abuse by restricting untrusted processes from obtaining a handle to **LSASS** via the *Win32 OpenProcess* API. Furthermore, most EDR solutions commonly detect the majority of known techniques. Drawing from my experience in evading defenses across different scenarios and products, we'll explore a method to 'steal' a user's identity without the necessity of attacking **LSASS** or injecting into the target process in question.
+The issue lies in targeting **LSASS for credential theft**, which holds immense value for adversaries, yet this process is closely monitored and protected. We've witnessed the inception of **Protected Process Light (PPL)** to prevent credential theft from user mode. To circumvent this, a driver installation was introduced, albeit effective, it operates noisily. Additionally, within **Windows Defender Exploit Guard (WDEG)**, there exists **Attack Surface Reduction (ASR)**, which includes a rule that 'prevents' **LSASS** abuse by restricting *untrusted processes* from obtaining a *handle* to **LSASS** via the *Win32 OpenProcess* API. Furthermore, most *EDR* solutions commonly detect the majority of known techniques. Drawing from my experience in evading defenses across different scenarios and products, we'll explore a method to 'steal' a user's identity without the necessity of attacking **LSASS** or injecting into the target process in question.
 
 ##### [About Protected Process Light (PPL) technology for Windows](https://support.kaspersky.com/common/windows/13905).
 ##### [Attack surface reduction rules overview](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/attack-surface-reduction?view=o365-worldwide).
@@ -98,7 +101,7 @@ By launching our proof of concept (malicious artifact) against a user within the
 
 As depicted in the following figure, we successfully acquired the identity of the user **TokenUser** by stealing the Command Prompt's **Access Token** and create a new instance of **cmd.exe** under that user's context:
 
-![image](https://github.com/CarlosG13/Interactive-Cross-Session-Token-Impersonation-Terminal/assets/69405457/57cda6ef-e88c-4ee5-beb6-ec164dd53062)
+![TkTheft1](https://github.com/CarlosG13/Interactive-Cross-Session-Token-Impersonation-Terminal/assets/69405457/dcdc2eb2-d3fe-4954-a504-f21a16973910)
 
 ##### **Although our technique worked seamlessly, there's a crucial question we must address: What happens if we attempt to steal the Token of a user in a different session than ours?**
 
@@ -116,7 +119,7 @@ What happens if we try to steal the *Token* of a process located in a session di
 
 As observed in the following illustration, the spawned **cmd.exe** process exhibits a *disrupted GUI*. Proper interaction with the handles *(StdIn, StdOut, and StdErr)* of the new process as **ZeroTrust-Sec.local\Administrator** is unattainable. This is due to the *Token* having a **Session ID** that differs from our current session.
 
-![image](https://github.com/CarlosG13/Interactive-Cross-Session-Token-Impersonation-Terminal/assets/69405457/a19c4fd3-5393-420a-81ac-aba4db4e9fa3)
+![TkTheft2](https://github.com/CarlosG13/Interactive-Cross-Session-Token-Impersonation-Terminal/assets/69405457/9caa11c2-1bca-4c9e-b2e9-602a20fdbbde)
 
 According to the following representation of an **Access Token** structure, *Tokens* contain a field known as the *TS Session ID*:
 
@@ -157,14 +160,9 @@ The proposed solution involves using **anonymous pipes** and creating a new cons
 
 * Testing Our Artifacts - (Console App):
   
-![image](https://github.com/CarlosG13/Interactive-Cross-Session-Token-Impersonation-Terminal/assets/69405457/5287d136-5826-46ad-a486-cdd5a869edc7)
+![TkTheft3](https://github.com/CarlosG13/Interactive-Cross-Session-Token-Impersonation-Terminal/assets/69405457/ef4bb449-6852-4e97-a92f-53497c783a42)
 
 
 * Testing Our Artifacts - (GUI App):
 
-  
-   ![image](https://github.com/CarlosG13/Interactive-Cross-Session-Token-Impersonation-Terminal/assets/69405457/0b8e4a68-78b0-4836-a128-cfea25e62e9d)
-
-
-This new approach in the **Access Token Manipulation** technique eliminates the need to escalate to **NT Authority\System** or modify our **desktop's ACL**, thereby reducing our chances of detection or raising suspicions.
-This artifact underwent testing against one of the leading *EDR* solutions in the industry, successfully evading detection.
+![TkTheft4](https://github.com/CarlosG13/Interactive-Cross-Session-Token-Impersonation-Terminal/assets/69405457/de9eb2fc-4bdd-4af9-b378-18244fb161de)
