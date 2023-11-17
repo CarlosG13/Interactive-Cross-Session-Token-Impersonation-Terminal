@@ -155,7 +155,7 @@ The proposed solution involves using **anonymous pipes** and creating a new cons
 
  - **Note:** while *GUI* isn't mandatory for our technique, *GUI* applications can camouflage malicious activities, making it harder for security tools to differentiate between legitimate user interactions and malicious actions. Additionally, if we choose the approach of creating a console-based artifact, there's no need to call **AllocConsole()**, as we'll already have one in place.
 
-* Testing Our Aritfacts - (Console App):
+* Testing Our Artifacts - (Console App):
   
 ![image](https://github.com/CarlosG13/Interactive-Cross-Session-Token-Impersonation-Terminal/assets/69405457/5287d136-5826-46ad-a486-cdd5a869edc7)
 
