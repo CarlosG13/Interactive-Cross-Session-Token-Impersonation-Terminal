@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 
 
-namespace ModFinal
+namespace TokenTheft
 {
     internal class Win32
     {

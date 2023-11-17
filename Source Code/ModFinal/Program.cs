@@ -1,10 +1,9 @@
-﻿using ModFinal;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
-namespace VaultRead
+namespace TokenTheft
 {
     internal class Program
     {

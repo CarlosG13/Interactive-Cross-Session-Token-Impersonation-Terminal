@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{34B1522E-A102-4E7F-B780-F12478C821BE}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ModFinal</RootNamespace>
-    <AssemblyName>ModFinal</AssemblyName>
+    <RootNamespace>TokenTheft</RootNamespace>
+    <AssemblyName>TokenTheft</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
